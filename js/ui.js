@@ -112,19 +112,25 @@ function renderTransactionTable(tableBody, transactions, categories) {
 
     const dateCell = document.createElement("td");
     dateCell.textContent = formatDate(tx.date);
+    dateCell.dataset.label = "Tanggal";
     const catCell = document.createElement("td");
     catCell.textContent =
       categoryMap.get(tx.categoryId) || tx.categoryName || "Tidak diketahui";
+    catCell.dataset.label = "Kategori";
     const typeCell = document.createElement("td");
     typeCell.textContent = humanizeType(tx.type);
+    typeCell.dataset.label = "Jenis";
     const amountCell = document.createElement("td");
     amountCell.className = "align-right";
     const sign = tx.type === "income" ? "+" : "-";
     amountCell.textContent = `${sign} ${formatCurrency(tx.amount)}`;
+    amountCell.dataset.label = "Jumlah";
     const noteCell = document.createElement("td");
     noteCell.textContent = tx.note || "-";
+    noteCell.dataset.label = "Catatan";
     const actionCell = document.createElement("td");
     actionCell.className = "table-actions";
+    actionCell.dataset.label = "Aksi";
 
     const editBtn = document.createElement("button");
     editBtn.className = "table-action";
