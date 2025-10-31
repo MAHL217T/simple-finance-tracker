@@ -1,0 +1,31 @@
+{
+  "name": "Simple Finance Tracker",
+  "short_name": "Finance",
+  "id": "simple-finance-tracker",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f7fb",
+  "theme_color": "#4a63e7",
+  "description": "Kelola pemasukan dan pengeluaran secara lokal dengan aman dan nyaman.",
+  "icons": [
+    {
+      "src": "assets/icons/logo.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/logo.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icons/logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

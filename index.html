@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#4a63e7">
+  <title>Simple Finance Tracker</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/form.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="brand">
+        <img src="assets/icons/logo.svg" alt="Logo Simple Finance Tracker">
+        <div>
+          <h1>Simple Finance Tracker</h1>
+          <p class="tagline">Kelola pemasukan dan pengeluaran secara cerdas dan privat.</p>
+        </div>
+      </div>
+      <div class="header-controls">
+        <div class="today">
+          <span id="today-date"></span>
+          <p id="month-summary" class="summary-text"></p>
+        </div>
+        <button id="logout-button" class="btn ghost" type="button" title="Kunci aplikasi">
+          <span class="icon">Keluar</span>
+        </button>
+        <button id="theme-toggle" class="btn ghost" type="button" aria-label="Ganti tema">
+          <span class="icon">Gelap</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <section id="dashboard" class="card-grid">
+        <article class="card highlight">
+          <header>
+            <img src="assets/icons/income.svg" alt="">
+            <h2>Saldo</h2>
+          </header>
+          <p id="balance-total" class="amount">Rp0</p>
+        </article>
+        <article class="card">
+          <header>
+            <img src="assets/icons/income.svg" alt="">
+            <h2>Pemasukan</h2>
+          </header>
+          <p id="income-total" class="amount positive">Rp0</p>
+        </article>
+        <article class="card">
+          <header>
+            <img src="assets/icons/expense.svg" alt="">
+            <h2>Pengeluaran</h2>
+          </header>
+          <p id="expense-total" class="amount negative">Rp0</p>
+        </article>
+        <article class="card chart-card">
+          <header>
+            <h2>Performa Bulanan</h2>
+            <p class="muted">Ringkasan 6 bulan terakhir</p>
+          </header>
+          <canvas id="trend-chart" width="640" height="220" aria-label="Grafik pemasukan dan pengeluaran"></canvas>
+        </article>
+      </section>
+
+      <section id="transaction-section" class="layout two-column">
+        <div class="column">
+          <article class="card">
+            <header>
+              <h2>Tambah Transaksi</h2>
+            </header>
+            <form id="transaction-form" autocomplete="off">
+              <div class="field">
+                <label for="transaction-date">Tanggal</label>
+                <input type="date" id="transaction-date" name="date" required>
+              </div>
+              <div class="field-group">
+                <div class="field">
+                  <label for="transaction-type">Jenis</label>
+                  <select id="transaction-type" name="type" required>
+                    <option value="income">Pemasukan</option>
+                    <option value="expense">Pengeluaran</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="transaction-category">Kategori</label>
+                  <select id="transaction-category" name="category" required></select>
+                </div>
+              </div>
+              <div class="field">
+                <label for="transaction-amount">Jumlah (Rp)</label>
+                <input type="number" id="transaction-amount" name="amount" min="0" max="100000000000" step="1000" placeholder="0" required>
+              </div>
+              <div class="field">
+                <label for="transaction-note">Catatan</label>
+                <textarea id="transaction-note" name="note" placeholder="Opsional"></textarea>
+              </div>
+              <div class="form-actions">
+                <button type="reset" class="btn ghost">Bersihkan</button>
+                <button type="submit" class="btn primary">Simpan</button>
+              </div>
+            </form>
+          </article>
+
+          <article class="card">
+            <header>
+              <h2>Kategori</h2>
+            </header>
+            <form id="category-form" class="inline-form">
+              <div class="field">
+                <label for="category-name">Nama kategori</label>
+                <input type="text" id="category-name" name="name" minlength="2" required>
+              </div>
+              <div class="field">
+                <label for="category-type">Jenis</label>
+                <select id="category-type" name="type" required>
+                  <option value="income">Pemasukan</option>
+                  <option value="expense">Pengeluaran</option>
+                </select>
+              </div>
+              <button type="submit" class="btn secondary">Tambah</button>
+            </form>
+            <div class="category-list">
+              <h3>Daftar Kategori</h3>
+              <ul id="category-list"></ul>
+            </div>
+          </article>
+        </div>
+
+        <div class="column">
+          <article class="card">
+            <header class="flex-between">
+              <div>
+                <h2>Riwayat Transaksi</h2>
+                <p class="muted">Kelola dan filter transaksi kamu</p>
+              </div>
+              <div class="filters">
+                <label>
+                  Jenis
+                  <select id="filter-type">
+                    <option value="all">Semua</option>
+                    <option value="income">Pemasukan</option>
+                    <option value="expense">Pengeluaran</option>
+                  </select>
+                </label>
+                <label>
+                  Bulan
+                  <select id="filter-month"></select>
+                </label>
+                <label>
+                  Tahun
+                  <select id="filter-year"></select>
+                </label>
+              </div>
+            </header>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tanggal</th>
+                    <th>Kategori</th>
+                    <th>Jenis</th>
+                    <th class="align-right">Jumlah</th>
+                    <th>Catatan</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="transaction-table"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="card">
+            <header class="flex-between">
+              <div>
+                <h2>Laporan & Analisis</h2>
+                <p class="muted">Pantau performa keuangan</p>
+              </div>
+              <div class="report-actions">
+                <button id="export-data" type="button" class="btn secondary">Export JSON</button>
+                <label class="btn ghost file-input" for="import-data">
+                  Import
+                  <input type="file" id="import-data" accept="application/json">
+                </label>
+              </div>
+            </header>
+            <div class="report-grid">
+              <div class="report-card">
+                <h3>Pengeluaran per Kategori</h3>
+                <ul id="expense-by-category"></ul>
+              </div>
+              <div class="report-card">
+                <h3>Rata-rata Pengeluaran Bulanan</h3>
+                <p id="monthly-average" class="amount negative">Rp0</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <header>
+              <h2>Keamanan</h2>
+            </header>
+            <form id="pin-form" class="inline-form">
+              <div class="field">
+                <label for="current-pin">PIN Saat Ini</label>
+                <input type="password" id="current-pin" maxlength="4" inputmode="numeric" placeholder="****">
+              </div>
+              <div class="field">
+                <label for="new-pin">PIN Baru</label>
+                <input type="password" id="new-pin" maxlength="4" inputmode="numeric" placeholder="4 digit">
+              </div>
+              <div class="field">
+                <label for="confirm-pin">Konfirmasi PIN</label>
+                <input type="password" id="confirm-pin" maxlength="4" inputmode="numeric" placeholder="4 digit">
+              </div>
+              <button type="submit" class="btn primary">Simpan PIN</button>
+            </form>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>&copy; <span id="footer-year"></span> Simple Finance Tracker. Data tersimpan aman di perangkatmu.</p>
+    </footer>
+  </div>
+
+  <dialog id="auth-dialog">
+    <form id="auth-form" class="auth-form">
+      <h2 id="auth-title">Masukkan PIN</h2>
+      <p id="auth-message" class="muted">Masukkan PIN 4 digit untuk membuka aplikasi.</p>
+      <input type="password" id="auth-pin" maxlength="4" inputmode="numeric" required>
+      <menu>
+        <button type="button" id="auth-cancel" class="btn ghost">Batal</button>
+        <button type="submit" class="btn primary">Lanjut</button>
+      </menu>
+      <p id="auth-error" role="alert"></p>
+    </form>
+  </dialog>
+
+  <dialog id="transaction-dialog" class="wide">
+    <form id="transaction-edit-form" class="auth-form">
+      <h2>Edit Transaksi</h2>
+      <div class="field">
+        <label for="edit-date">Tanggal</label>
+        <input type="date" id="edit-date" name="date" required>
+      </div>
+      <div class="field-group">
+        <div class="field">
+          <label for="edit-type">Jenis</label>
+          <select id="edit-type" name="type" required>
+            <option value="income">Pemasukan</option>
+            <option value="expense">Pengeluaran</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="edit-category">Kategori</label>
+          <select id="edit-category" name="category" required></select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="edit-amount">Jumlah (Rp)</label>
+        <input type="number" id="edit-amount" name="amount" min="0" max="100000000000" step="1000" required>
+      </div>
+      <div class="field">
+        <label for="edit-note">Catatan</label>
+        <textarea id="edit-note" name="note"></textarea>
+      </div>
+      <menu>
+        <button type="button" id="edit-cancel" class="btn ghost">Batal</button>
+        <button type="submit" class="btn primary">Simpan</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

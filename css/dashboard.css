@@ -1,0 +1,43 @@
+.chart-card {
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.chart-card canvas {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  background: var(--bg-muted);
+  padding: 1rem;
+}
+
+.table-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-size: 0.85rem;
+  cursor: pointer;
+  background: rgba(74, 99, 231, 0.08);
+  color: var(--accent-primary);
+}
+
+.table-action.danger {
+  background: rgba(231, 74, 74, 0.08);
+  color: var(--accent-danger);
+}
+
+.table-action:hover {
+  filter: brightness(0.95);
+}
+
+.table-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.summary-flag {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}

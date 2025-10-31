@@ -1,0 +1,45 @@
+:root {
+  --font-sans: "Inter", "Segoe UI", sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --shadow-sm: 0 8px 16px rgba(20, 24, 40, 0.08);
+
+  --bg-app: #f6f7fb;
+  --bg-card: #ffffff;
+  --bg-muted: #eef0f8;
+  --bg-input: #fdfdff;
+
+  --text-primary: #1f2430;
+  --text-secondary: #545b6c;
+  --text-muted: #798097;
+  --text-inverse: #ffffff;
+
+  --accent-primary: #4a63e7;
+  --accent-secondary: #19a974;
+  --accent-danger: #e74a4a;
+
+  --border-subtle: #d6d9e4;
+
+  --chart-income: #19a974;
+  --chart-expense: #e74a4a;
+}
+
+body[data-theme="dark"] {
+  --bg-app: #111321;
+  --bg-card: #1a1c2d;
+  --bg-muted: #24263b;
+  --bg-input: #151728;
+
+  --text-primary: #f1f4ff;
+  --text-secondary: #bcc2de;
+  --text-muted: #7d84a8;
+  --text-inverse: #0c0f1a;
+
+  --accent-primary: #7d9aff;
+  --accent-secondary: #4adda3;
+  --accent-danger: #ff6b6b;
+
+  --border-subtle: #2b2e44;
+
+  --shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.35);
+}

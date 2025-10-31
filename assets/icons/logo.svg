@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>Simple Finance Tracker</title>
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a63e7"/>
+      <stop offset="100%" stop-color="#19a974"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#g1)"/>
+  <path d="M20 38c5 7 12 8 18 1 4-5 9-7 14-8" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <path d="M20 26c3-4 7-6 12-6 4 0 7 1 10 4" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <circle cx="22" cy="38" r="4" fill="#fff"/>
+  <circle cx="38" cy="22" r="4" fill="#fff"/>
+</svg>
