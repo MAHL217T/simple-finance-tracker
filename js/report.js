@@ -95,12 +95,12 @@ function monthSummary(transactions) {
   const monthly = groupByMonth(transactions);
   const current = monthly.get(currentMonthKey);
   if (!current) {
-    return "Bulan ini belum ada transaksi. Mulai catat yuk! 🌱";
+    return "Bulan ini belum ada transaksi. Mulai catat yuk!";
   }
   if (current.income >= current.expense) {
-    return "Bulan ini kamu hemat 👍";
+    return "Bulan ini kamu hemat. Pertahankan!";
   }
-  return "Pengeluaran melebihi pemasukan, cek lagi ya. ⚠️";
+  return "Pengeluaran melebihi pemasukan, cek lagi ya.";
 }
 
 export {
