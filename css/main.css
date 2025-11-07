@@ -190,6 +190,42 @@ a {
   white-space: nowrap;
 }
 
+.theme-toggle-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.35rem;
+}
+
+.theme-toggle-icon svg {
+  width: 18px;
+  height: 18px;
+  display: none;
+  fill: currentColor;
+}
+
+.theme-toggle[data-icon="sun"] .sun-icon {
+  display: block;
+  color: #f6c343;
+}
+
+.theme-toggle[data-icon="sun"] .moon-icon {
+  display: none;
+}
+
+.theme-toggle[data-icon="moon"] .moon-icon {
+  display: block;
+  color: #8ab4f8;
+}
+
+.theme-toggle[data-icon="moon"] .sun-icon {
+  display: none;
+}
+
 .utility-sheet {
   border: none;
   padding: 0;

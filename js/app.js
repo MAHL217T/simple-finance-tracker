@@ -109,18 +109,14 @@ function applyTheme(theme) {
   if (!themeToggle) {
     return;
   }
-  const iconText = theme === "dark" ? "Terang" : "Gelap";
   const labelText = theme === "dark" ? "Mode Terang" : "Mode Gelap";
   const description =
     theme === "dark" ? "Ganti ke mode terang" : "Ganti ke mode gelap";
-  const iconEl = themeToggle.querySelector(".icon");
   const labelEl = themeToggle.querySelector(".label");
-  if (iconEl) {
-    iconEl.textContent = iconText;
-  }
   if (labelEl) {
     labelEl.textContent = labelText;
   }
+  themeToggle.dataset.icon = theme === "dark" ? "sun" : "moon";
   themeToggle.setAttribute("aria-label", description);
   themeToggle.setAttribute("title", description);
 }
