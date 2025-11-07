@@ -14,6 +14,7 @@ import {
   lock
 } from "./storage.js";
 import {
+  formatCurrency,
   renderSummary,
   renderMonthSummary,
   populateCategorySelect,
@@ -105,12 +106,23 @@ function showToast(message, variant = "success") {
 function applyTheme(theme) {
   document.body.dataset.theme = theme;
   setTheme(theme);
+  if (!themeToggle) {
+    return;
+  }
   const iconText = theme === "dark" ? "Terang" : "Gelap";
-  const label =
-    theme === "dark" ? "Ganti ke tema terang" : "Ganti ke tema gelap";
-  themeToggle.querySelector(".icon").textContent = iconText;
-  themeToggle.setAttribute("aria-label", label);
-  themeToggle.setAttribute("title", label);
+  const labelText = theme === "dark" ? "Mode Terang" : "Mode Gelap";
+  const description =
+    theme === "dark" ? "Ganti ke mode terang" : "Ganti ke mode gelap";
+  const iconEl = themeToggle.querySelector(".icon");
+  const labelEl = themeToggle.querySelector(".label");
+  if (iconEl) {
+    iconEl.textContent = iconText;
+  }
+  if (labelEl) {
+    labelEl.textContent = labelText;
+  }
+  themeToggle.setAttribute("aria-label", description);
+  themeToggle.setAttribute("title", description);
 }
 
 function initTheme() {
@@ -567,6 +579,8 @@ function setupEventListeners() {
 
 function init() {
   initTheme();
+  initTopbarSettings();
+  initShellNavigation();
   initDate();
   initDefaultValues();
   registerServiceWorker();
@@ -578,6 +592,185 @@ function init() {
       showToast("Selamat datang kembali!", "info");
     }
   });
+}
+
+function initTopbarSettings() {
+  const sheetButtons = document.querySelectorAll("[data-sheet-target]");
+  sheetButtons.forEach((button) => {
+    const targetId = button.dataset.sheetTarget;
+    const sheet = document.getElementById(targetId);
+    if (!sheet) {
+      return;
+    }
+    button.addEventListener("click", () => {
+      openUtilitySheet(sheet);
+    });
+  });
+
+  const sheetCloseButtons = document.querySelectorAll("[data-sheet-close]");
+  sheetCloseButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const dialog = btn.closest("dialog");
+      dialog?.close();
+    });
+  });
+
+  document.querySelectorAll(".utility-sheet").forEach((dialog) => {
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) {
+        dialog.close();
+      }
+    });
+  });
+
+  const closeParentSheet = (element) => {
+    element.closest("dialog")?.close();
+  };
+
+  document.querySelectorAll("[data-theme-choice]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const desiredTheme = button.dataset.themeChoice === "dark" ? "dark" : "light";
+      applyTheme(desiredTheme);
+      closeParentSheet(button);
+    });
+  });
+
+  document
+    .querySelectorAll("[data-setting-action='export']")
+    .forEach((button) => {
+      if (!exportButton) {
+        return;
+      }
+      button.addEventListener("click", () => {
+        exportButton.click();
+        closeParentSheet(button);
+      });
+    });
+
+  document
+    .querySelectorAll("[data-setting-action='import']")
+    .forEach((button) => {
+      if (!importInput) {
+        return;
+      }
+      button.addEventListener("click", () => {
+        importInput.click();
+        closeParentSheet(button);
+      });
+    });
+
+  document
+    .querySelectorAll("[data-setting-action='lock']")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        if (logoutButton) {
+          logoutButton.click();
+        } else {
+          handleLogout();
+        }
+        closeParentSheet(button);
+      });
+    });
+
+  const savingsRange = document.querySelector("[data-bdi-target]");
+  const savingsValue = document.getElementById("bdi-target-value");
+  if (savingsRange && savingsValue) {
+    const syncRange = () => {
+      const multiplier = Number(savingsRange.value || 0);
+      const amount = multiplier * 1000000;
+      savingsValue.textContent = formatCurrency(amount);
+    };
+    savingsRange.addEventListener("input", syncRange);
+    syncRange();
+  }
+
+  document.querySelectorAll("[data-toggle-label]").forEach((input) => {
+    const target = document.getElementById(input.dataset.toggleLabel);
+    if (!target) {
+      return;
+    }
+    const syncState = () => {
+      target.textContent = input.checked ? "Aktif" : "Nonaktif";
+      if (input.checked) {
+        target.classList.remove("outline");
+        target.classList.add("subtle");
+      } else {
+        target.classList.add("outline");
+        target.classList.remove("subtle");
+      }
+    };
+    input.addEventListener("change", syncState);
+    syncState();
+  });
+}
+
+function openUtilitySheet(dialog) {
+  if (typeof dialog.showModal === "function") {
+    dialog.showModal();
+  } else {
+    dialog.setAttribute("open", "");
+  }
+}
+
+function initShellNavigation() {
+  const navButtons = document.querySelectorAll("[data-scroll-target]");
+  navButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const didScroll = scrollToTarget(button.dataset.scrollTarget);
+      if (didScroll) {
+        event.preventDefault();
+      }
+      navButtons.forEach((btn) => btn.classList.remove("active"));
+      button.classList.add("active");
+    });
+  });
+
+  const quickActionButtons = document.querySelectorAll("[data-quick-action]");
+  quickActionButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      handleQuickAction(button.dataset.quickAction);
+    });
+  });
+}
+
+function scrollToTarget(selector) {
+  if (!selector) {
+    return false;
+  }
+  const target = document.querySelector(selector);
+  if (!target) {
+    return false;
+  }
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
+  return true;
+}
+
+function handleQuickAction(action = "") {
+  switch (action) {
+    case "toggle-theme":
+      if (themeToggle) {
+        themeToggle.click();
+      }
+      break;
+    case "open-pin":
+      {
+        const settingsSheet = document.getElementById("settings-sheet");
+        if (settingsSheet) {
+          openUtilitySheet(settingsSheet);
+          setTimeout(() => {
+            document.getElementById("current-pin")?.focus({ preventScroll: true });
+          }, 200);
+        }
+      }
+      break;
+    case "export-data":
+      if (exportButton) {
+        exportButton.click();
+      }
+      break;
+    default:
+      break;
+  }
 }
 
 init();

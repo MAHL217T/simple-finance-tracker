@@ -13,220 +13,293 @@
 </head>
 <body>
   <div class="app-shell">
-    <header class="app-header">
-      <div class="brand">
+    <aside class="shell-panel primary-panel">
+      <div class="panel-brand">
         <img src="assets/icons/logo.svg" alt="Logo Simple Finance Tracker">
         <div>
-          <h1>Simple Finance Tracker</h1>
-          <p class="tagline">Kelola pemasukan dan pengeluaran secara cerdas dan privat.</p>
+          <p class="eyebrow">Simple Finance Tracker</p>
+          <h1>Command Center</h1>
+          <p class="muted">Kelola cash flow pribadi secara privat.</p>
         </div>
       </div>
-      <div class="header-controls">
-        <div class="today">
-          <span id="today-date"></span>
-          <p id="month-summary" class="summary-text"></p>
-        </div>
-        <button id="logout-button" class="btn ghost" type="button" title="Kunci aplikasi">
-          <span class="icon">Keluar</span>
-        </button>
-        <button id="theme-toggle" class="btn ghost" type="button" aria-label="Ganti tema">
-          <span class="icon">Gelap</span>
-        </button>
+      <div class="panel-block today-glance">
+        <p class="eyebrow">Hari ini</p>
+        <p id="today-date" class="today-date"></p>
+        <p id="month-summary" class="summary-text"></p>
       </div>
-    </header>
+      <nav class="panel-nav" aria-label="Mainbar">
+        <p class="eyebrow">Mainbar</p>
+        <a class="nav-link active" href="#overview-section" data-scroll-target="#overview-section">Overview</a>
+        <a class="nav-link" href="#add-transaction-card" data-scroll-target="#add-transaction-card">Tambah Transaksi</a>
+        <a class="nav-link" href="#category-management" data-scroll-target="#category-management">Kategori</a>
+        <a class="nav-link" href="#category-list-section" data-scroll-target="#category-list-section">Daftar Kategori</a>
+        <a class="nav-link" href="#history-card" data-scroll-target="#history-card">Riwayat Transaksi</a>
+        <a class="nav-link" href="#report-card" data-scroll-target="#report-card">Laporan & Analisis</a>
+      </nav>
+      <div class="panel-block pulse-card">
+        <p class="eyebrow">Detak finansial</p>
+        <p class="pulse-label">Stabil</p>
+        <p class="muted">Pantau saldo dan kategori favorit langsung dari mainbar.</p>
+      </div>
+    </aside>
 
-    <main class="app-main">
-      <section id="dashboard" class="card-grid">
-        <article class="card highlight">
-          <header>
-            <img src="assets/icons/income.svg" alt="">
-            <h2>Saldo</h2>
-          </header>
-          <p id="balance-total" class="amount">Rp0</p>
-        </article>
-        <article class="card">
-          <header>
-            <img src="assets/icons/income.svg" alt="">
-            <h2>Pemasukan</h2>
-          </header>
-          <p id="income-total" class="amount positive">Rp0</p>
-        </article>
-        <article class="card">
-          <header>
-            <img src="assets/icons/expense.svg" alt="">
-            <h2>Pengeluaran</h2>
-          </header>
-          <p id="expense-total" class="amount negative">Rp0</p>
-        </article>
-        <article class="card chart-card">
-          <header>
-            <h2>Performa Bulanan</h2>
-            <p class="muted">Ringkasan 6 bulan terakhir</p>
-          </header>
-          <canvas id="trend-chart" width="640" height="220" aria-label="Grafik pemasukan dan pengeluaran"></canvas>
-        </article>
-      </section>
+    <div class="app-surface">
+      <main class="app-main">
+        <section class="mainbar-hero" id="overview-section">
+          <div>
+            <p class="eyebrow">Panel utama</p>
+            <h2>Pantau pemasukan & pengeluaran dalam satu sapuan layar.</h2>
+            <p class="muted">Navigasi kiri membantu fokus ke transaksi, sedangkan panel kanan memuat insight singkat.</p>
+          </div>
+          <div class="hero-actions">
+            <span class="chip positive">Transaksi real-time</span>
+            <span class="chip outline">Mode aman aktif</span>
+          </div>
+        </section>
 
-      <section id="transaction-section" class="layout two-column">
-        <div class="column">
-          <article class="card">
+        <section id="dashboard" class="card-grid spotlight-grid">
+          <article class="card highlight">
             <header>
-              <h2>Tambah Transaksi</h2>
+              <img src="assets/icons/income.svg" alt="">
+              <h2>Saldo</h2>
             </header>
-            <form id="transaction-form" autocomplete="off">
-              <div class="field">
-                <label for="transaction-date">Tanggal</label>
-                <input type="date" id="transaction-date" name="date" required>
-              </div>
-              <div class="field-group">
+            <p id="balance-total" class="amount">Rp0</p>
+          </article>
+          <article class="card" id="category-panel">
+            <header>
+              <img src="assets/icons/income.svg" alt="">
+              <h2>Pemasukan</h2>
+            </header>
+            <p id="income-total" class="amount positive">Rp0</p>
+          </article>
+          <article class="card" id="analytics-panel">
+            <header>
+              <img src="assets/icons/expense.svg" alt="">
+              <h2>Pengeluaran</h2>
+            </header>
+            <p id="expense-total" class="amount negative">Rp0</p>
+          </article>
+          <article class="card chart-card">
+            <header>
+              <h2>Performa Bulanan</h2>
+              <p class="muted">Ringkasan 6 bulan terakhir</p>
+            </header>
+            <canvas id="trend-chart" width="640" height="220" aria-label="Grafik pemasukan dan pengeluaran"></canvas>
+          </article>
+        </section>
+
+        <section id="transaction-section" class="layout two-column">
+          <div class="column">
+            <article class="card" id="add-transaction-card">
+              <header>
+                <h2>Tambah Transaksi</h2>
+              </header>
+              <form id="transaction-form" autocomplete="off">
                 <div class="field">
-                  <label for="transaction-type">Jenis</label>
-                  <select id="transaction-type" name="type" required>
+                  <label for="transaction-date">Tanggal</label>
+                  <input type="date" id="transaction-date" name="date" required>
+                </div>
+                <div class="field-group">
+                  <div class="field">
+                    <label for="transaction-type">Jenis</label>
+                    <select id="transaction-type" name="type" required>
+                      <option value="income">Pemasukan</option>
+                      <option value="expense">Pengeluaran</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="transaction-category">Kategori</label>
+                    <select id="transaction-category" name="category" required></select>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="transaction-amount">Jumlah (Rp)</label>
+                  <input type="number" id="transaction-amount" name="amount" min="0" max="100000000000" step="1000" placeholder="0" required>
+                </div>
+                <div class="field">
+                  <label for="transaction-note">Catatan</label>
+                  <textarea id="transaction-note" name="note" placeholder="Opsional"></textarea>
+                </div>
+                <div class="form-actions">
+                  <button type="reset" class="btn ghost">Bersihkan</button>
+                  <button type="submit" class="btn primary">Simpan</button>
+                </div>
+              </form>
+            </article>
+
+            <article class="card" id="category-management">
+              <header>
+                <h2>Kategori</h2>
+              </header>
+              <form id="category-form" class="inline-form">
+                <div class="field">
+                  <label for="category-name">Nama kategori</label>
+                  <input type="text" id="category-name" name="name" minlength="2" required>
+                </div>
+                <div class="field">
+                  <label for="category-type">Jenis</label>
+                  <select id="category-type" name="type" required>
                     <option value="income">Pemasukan</option>
                     <option value="expense">Pengeluaran</option>
                   </select>
                 </div>
-                <div class="field">
-                  <label for="transaction-category">Kategori</label>
-                  <select id="transaction-category" name="category" required></select>
+                <button type="submit" class="btn secondary">Tambah</button>
+              </form>
+              <div class="category-list" id="category-list-section">
+                <h3>Daftar Kategori</h3>
+                <ul id="category-list"></ul>
+              </div>
+            </article>
+          </div>
+
+          <div class="column">
+            <article class="card" id="history-card">
+              <header class="flex-between">
+                <div>
+                  <h2>Riwayat Transaksi</h2>
+                  <p class="muted">Kelola dan filter transaksi kamu</p>
+                </div>
+                <div class="filters">
+                  <label>
+                    Jenis
+                    <select id="filter-type">
+                      <option value="all">Semua</option>
+                      <option value="income">Pemasukan</option>
+                      <option value="expense">Pengeluaran</option>
+                    </select>
+                  </label>
+                  <label>
+                    Bulan
+                    <select id="filter-month"></select>
+                  </label>
+                  <label>
+                    Tahun
+                    <select id="filter-year"></select>
+                  </label>
+                </div>
+              </header>
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Tanggal</th>
+                      <th>Kategori</th>
+                      <th>Jenis</th>
+                      <th class="align-right">Jumlah</th>
+                      <th>Catatan</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="transaction-table"></tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="card" id="report-card">
+              <header class="flex-between">
+                <div>
+                  <h2>Laporan & Analisis</h2>
+                  <p class="muted">Pantau performa keuangan</p>
+                </div>
+                <div class="report-actions">
+                  <button id="export-data" type="button" class="btn secondary">Export JSON</button>
+                  <label class="btn ghost file-input" for="import-data">
+                    Import
+                    <input type="file" id="import-data" accept="application/json">
+                  </label>
+                </div>
+              </header>
+              <div class="report-grid">
+                <div class="report-card">
+                  <h3>Pengeluaran per Kategori</h3>
+                  <ul id="expense-by-category"></ul>
+                </div>
+                <div class="report-card">
+                  <h3>Rata-rata Pengeluaran Bulanan</h3>
+                  <p id="monthly-average" class="amount negative">Rp0</p>
                 </div>
               </div>
-              <div class="field">
-                <label for="transaction-amount">Jumlah (Rp)</label>
-                <input type="number" id="transaction-amount" name="amount" min="0" max="100000000000" step="1000" placeholder="0" required>
-              </div>
-              <div class="field">
-                <label for="transaction-note">Catatan</label>
-                <textarea id="transaction-note" name="note" placeholder="Opsional"></textarea>
-              </div>
-              <div class="form-actions">
-                <button type="reset" class="btn ghost">Bersihkan</button>
-                <button type="submit" class="btn primary">Simpan</button>
-              </div>
-            </form>
-          </article>
+            </article>
+          </div>
+        </section>
+      </main>
 
-          <article class="card">
-            <header>
-              <h2>Kategori</h2>
-            </header>
-            <form id="category-form" class="inline-form">
-              <div class="field">
-                <label for="category-name">Nama kategori</label>
-                <input type="text" id="category-name" name="name" minlength="2" required>
-              </div>
-              <div class="field">
-                <label for="category-type">Jenis</label>
-                <select id="category-type" name="type" required>
-                  <option value="income">Pemasukan</option>
-                  <option value="expense">Pengeluaran</option>
-                </select>
-              </div>
-              <button type="submit" class="btn secondary">Tambah</button>
-            </form>
-            <div class="category-list">
-              <h3>Daftar Kategori</h3>
-              <ul id="category-list"></ul>
+      <footer class="app-footer">
+        <p>&copy; <span id="footer-year"></span> Simple Finance Tracker. Data tersimpan aman di perangkatmu.</p>
+      </footer>
+    </div>
+
+    <aside class="shell-panel secondary-panel">
+      <section class="panel-card quick-settings">
+        <header class="quick-settings-header">
+          <div>
+            <p class="eyebrow">Pengaturan kanan</p>
+            <h3>Quick Setting</h3>
+          </div>
+          <button id="settings-button" class="btn ghost icon app-settings-button" type="button" aria-label="Buka pengaturan" data-sheet-target="settings-sheet">
+            <span class="icon-circle" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                <path d="M11.983 8.25a3.75 3.75 0 1 1 0 7.5 3.75 3.75 0 0 1 0-7.5zm0-5.25a1 1 0 0 1 .95.684l.34 1.05a7.29 7.29 0 0 1 1.81.748l1.06-.363a1 1 0 0 1 1.234.589l.63 1.732a1 1 0 0 1-.38 1.17l-.9.642a7.416 7.416 0 0 1 .005 1.996l.9.64a1 1 0 0 1 .38 1.17l-.63 1.732a1 1 0 0 1-1.233.588l-1.06-.362a7.257 7.257 0 0 1-1.81.748l-.34 1.05a1 1 0 0 1-.95.685h-1.966a1 1 0 0 1-.95-.685l-.34-1.05a7.29 7.29 0 0 1-1.81-.748l-1.06.362a1 1 0 0 1-1.234-.588l-.63-1.732a1 1 0 0 1 .38-1.17l.9-.64a7.416 7.416 0 0 1-.005-1.997l-.9-.64a1 1 0 0 1-.38-1.17l.63-1.732a1 1 0 0 1 1.234-.589l1.06.363a7.257 7.257 0 0 1 1.81-.748l.34-1.05a1 1 0 0 1 .95-.684h1.966z" fill="currentColor"/>
+              </svg>
+            </span>
+            <span class="label">Setting</span>
+          </button>
+        </header>
+        <ul class="setting-list action-list">
+          <li>
+            <div>
+              <p class="setting-title">Mode terang & gelap</p>
+              <p class="muted">Sesuaikan pengalaman visual</p>
             </div>
-          </article>
-        </div>
-
-        <div class="column">
-          <article class="card">
-            <header class="flex-between">
-              <div>
-                <h2>Riwayat Transaksi</h2>
-                <p class="muted">Kelola dan filter transaksi kamu</p>
-              </div>
-              <div class="filters">
-                <label>
-                  Jenis
-                  <select id="filter-type">
-                    <option value="all">Semua</option>
-                    <option value="income">Pemasukan</option>
-                    <option value="expense">Pengeluaran</option>
-                  </select>
-                </label>
-                <label>
-                  Bulan
-                  <select id="filter-month"></select>
-                </label>
-                <label>
-                  Tahun
-                  <select id="filter-year"></select>
-                </label>
-              </div>
-            </header>
-            <div class="table-wrapper">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Tanggal</th>
-                    <th>Kategori</th>
-                    <th>Jenis</th>
-                    <th class="align-right">Jumlah</th>
-                    <th>Catatan</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-                <tbody id="transaction-table"></tbody>
-              </table>
+            <button id="theme-toggle" class="btn ghost pill" type="button" aria-label="Ganti tema">
+              <span class="icon" aria-hidden="true">Gelap</span>
+              <span class="label">Mode Gelap</span>
+            </button>
+          </li>
+          <li>
+            <div>
+              <p class="setting-title">Penjagaan PIN</p>
+              <p class="muted">Keamanan perangkat</p>
             </div>
-          </article>
-
-          <article class="card">
-            <header class="flex-between">
-              <div>
-                <h2>Laporan & Analisis</h2>
-                <p class="muted">Pantau performa keuangan</p>
-              </div>
-              <div class="report-actions">
-                <button id="export-data" type="button" class="btn secondary">Export JSON</button>
-                <label class="btn ghost file-input" for="import-data">
-                  Import
-                  <input type="file" id="import-data" accept="application/json">
-                </label>
-              </div>
-            </header>
-            <div class="report-grid">
-              <div class="report-card">
-                <h3>Pengeluaran per Kategori</h3>
-                <ul id="expense-by-category"></ul>
-              </div>
-              <div class="report-card">
-                <h3>Rata-rata Pengeluaran Bulanan</h3>
-                <p id="monthly-average" class="amount negative">Rp0</p>
-              </div>
+            <button type="button" class="chip outline action-trigger" data-quick-action="open-pin">Atur PIN</button>
+          </li>
+          <li>
+            <div>
+              <p class="setting-title">Ekspor data</p>
+              <p class="muted">JSON siap pakai</p>
             </div>
-          </article>
-
-          <article class="card">
-            <header>
-              <h2>Keamanan</h2>
-            </header>
-            <form id="pin-form" class="inline-form">
-              <div class="field">
-                <label for="current-pin">PIN Saat Ini</label>
-                <input type="password" id="current-pin" maxlength="4" inputmode="numeric" placeholder="****">
-              </div>
-              <div class="field">
-                <label for="new-pin">PIN Baru</label>
-                <input type="password" id="new-pin" maxlength="4" inputmode="numeric" placeholder="4 digit">
-              </div>
-              <div class="field">
-                <label for="confirm-pin">Konfirmasi PIN</label>
-                <input type="password" id="confirm-pin" maxlength="4" inputmode="numeric" placeholder="4 digit">
-              </div>
-              <button type="submit" class="btn primary">Simpan PIN</button>
-            </form>
-          </article>
-        </div>
+            <button type="button" class="chip positive action-trigger" data-quick-action="export-data">Export</button>
+          </li>
+          <li>
+            <div>
+              <p class="setting-title">BDI Setting</p>
+              <p class="muted">Atur target tabungan & alarm</p>
+            </div>
+            <button type="button" class="chip subtle" data-sheet-target="bdi-sheet">Buka</button>
+          </li>
+          <li>
+            <div>
+              <p class="setting-title">Kunci aplikasi</p>
+              <p class="muted">Keluar dan amankan data</p>
+            </div>
+            <button id="logout-button" class="btn danger pill" type="button" title="Kunci aplikasi">
+              <span class="icon">Keluar</span>
+            </button>
+          </li>
+        </ul>
       </section>
-    </main>
 
-    <footer class="app-footer">
-      <p>&copy; <span id="footer-year"></span> Simple Finance Tracker. Data tersimpan aman di perangkatmu.</p>
-    </footer>
+      <section class="panel-card insight-card">
+        <p class="eyebrow">Insight</p>
+        <h3>Checklist mingguan</h3>
+        <ul class="insight-list">
+          <li>Review transaksi besar</li>
+          <li>Sinkronkan kategori</li>
+          <li>Arsipkan laporan PDF</li>
+        </ul>
+        <button class="btn secondary full" type="button">Lihat semua tips</button>
+      </section>
+    </aside>
   </div>
 
   <dialog id="auth-dialog">
@@ -275,6 +348,121 @@
         <button type="submit" class="btn primary">Simpan</button>
       </menu>
     </form>
+  </dialog>
+
+  <dialog id="settings-sheet" class="utility-sheet">
+    <div class="sheet-container">
+      <header class="sheet-header">
+        <div>
+          <p class="eyebrow">Pengaturan cepat</p>
+          <h3>Sesuaikan pengalamanmu</h3>
+          <p class="muted">Atur tema, kelola backup, atau kunci aplikasi dalam satu tempat.</p>
+        </div>
+        <button type="button" class="btn ghost pill" data-sheet-close>Tutup</button>
+      </header>
+      <ul class="sheet-list">
+        <li class="sheet-item">
+          <div>
+            <p class="setting-title">Mode tampilan</p>
+            <p class="muted">Sinkron dengan tombol Quick Setting</p>
+          </div>
+          <div class="button-pill-group">
+            <button type="button" class="chip outline" data-theme-choice="light">Terang</button>
+            <button type="button" class="chip outline" data-theme-choice="dark">Gelap</button>
+          </div>
+        </li>
+        <li class="sheet-item">
+          <div>
+            <p class="setting-title">Data & cadangan</p>
+            <p class="muted">Export atau import JSON pribadi</p>
+          </div>
+          <div class="button-pill-group">
+            <button type="button" class="btn ghost tiny" data-setting-action="export">Export</button>
+            <button type="button" class="btn ghost tiny" data-setting-action="import">Import</button>
+          </div>
+        </li>
+        <li class="sheet-item">
+          <div>
+            <p class="setting-title">Keamanan instan</p>
+            <p class="muted">Kunci aplikasi saat kamu tinggalkan layar</p>
+          </div>
+          <button type="button" class="btn danger tiny" data-setting-action="lock">Kunci sekarang</button>
+        </li>
+      </ul>
+      <div class="sheet-block pin-sheet">
+        <div>
+          <p class="setting-title">Kelola PIN</p>
+          <p class="muted">Ganti PIN aplikasi kapan saja</p>
+        </div>
+        <form id="pin-form" class="inline-form">
+          <div class="field">
+            <label for="current-pin">PIN Saat Ini</label>
+            <input type="password" id="current-pin" maxlength="4" inputmode="numeric" placeholder="****">
+          </div>
+          <div class="field-group">
+            <div class="field">
+              <label for="new-pin">PIN Baru</label>
+              <input type="password" id="new-pin" maxlength="4" inputmode="numeric" placeholder="4 digit">
+            </div>
+            <div class="field">
+              <label for="confirm-pin">Konfirmasi PIN</label>
+              <input type="password" id="confirm-pin" maxlength="4" inputmode="numeric" placeholder="4 digit">
+            </div>
+          </div>
+          <button type="submit" class="btn primary">Simpan PIN</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="bdi-sheet" class="utility-sheet">
+    <div class="sheet-container">
+      <header class="sheet-header">
+        <div>
+          <p class="eyebrow">Budget Direction Intelligence</p>
+          <h3>Kurasi strategi BDI</h3>
+          <p class="muted">Pantau target tabungan dan alarm overspending.</p>
+        </div>
+        <button type="button" class="btn ghost pill" data-sheet-close>Tutup</button>
+      </header>
+      <div class="sheet-block">
+        <div>
+          <p class="setting-title">Target tabungan bulanan</p>
+          <p class="muted"><span id="bdi-target-value"></span> per bulan</p>
+        </div>
+        <div class="range-stack">
+          <input type="range" min="1" max="20" value="5" step="1" data-bdi-target>
+          <div class="range-scale">
+            <span>1 jt</span>
+            <span>20 jt</span>
+          </div>
+        </div>
+      </div>
+      <div class="sheet-block">
+        <div>
+          <p class="setting-title">Alarm overspending</p>
+          <p class="muted">Tampilkan peringatan kalau pengeluaran tembus budget.</p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" checked data-toggle-label="overspend-state">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="sheet-block">
+        <div>
+          <p class="setting-title">Optimasi kategori</p>
+          <p class="muted">BDI menyarankan kategori populer secara otomatis.</p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" data-toggle-label="category-state">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="sheet-status">
+        <p>Status alarm: <span id="overspend-state" class="chip subtle">Aktif</span></p>
+        <p>Rekomendasi kategori: <span id="category-state" class="chip outline">Nonaktif</span></p>
+      </div>
+    </div>
   </dialog>
 
   <script type="module" src="js/app.js"></script>
